@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
-
+import cloudinary_storage
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,11 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django_cleanup.apps.CleanupConfig',
     # Third-Party Apps
     "rest_framework",
     "drf_yasg",
     "corsheaders",
     "django_filters",
+    'cloudinary_storage',
+    'cloudinary',
     # Local Apps (Your project's apps)
     "core",
 ]
@@ -162,3 +165,8 @@ CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000"  # the domain for front-end app(you can add more than 1)
 ]
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
