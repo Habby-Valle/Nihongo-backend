@@ -1,1 +1,1 @@
-web: gunicorn nihongo_gaido_api.wsgi
+web: gunicorn nihongo_gaido_api.wsgi: application --log-file -

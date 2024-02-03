@@ -14,6 +14,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 import cloudinary_storage
+import django_on_heroku
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -171,3 +172,5 @@ CLOUDINARY_STORAGE = {
     'API_KEY': config('CLOUDINARY_API_KEY'),
     'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
+
+django_on_heroku.settings(locals())
