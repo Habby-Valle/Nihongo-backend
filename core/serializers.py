@@ -270,16 +270,6 @@ class WordCreateSerializer(serializers.ModelSerializer):
 
         return value
 
-    def validate_meaning(self, value):
-        pattern = r"^[a-zA-Z]+$"
-
-        if not re.match(pattern, value):
-            raise serializers.ValidationError(
-                "O campo 'meaning' deve conter apenas letras."
-            )
-
-        return value
-
     class Meta:
         model = Word
         fields = ["id", "word", "reading", "meaning", "type", "level", "category"]
