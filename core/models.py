@@ -124,7 +124,7 @@ class Word(models.Model):
 
     TYPE_CHOICES = (
         ("Verb - Group 1", "Verb - Group 1 "),
-        ("Verb - Group 2 ", "Verb - Group 2"),
+        ("Verb - Group 2", "Verb - Group 2"),
         ("Verb - Group 3", "Verb - Group 3"),
         ("Adjective - i", "Adjective - i"),
         ("Adjective - na", "Adjective - na"),
