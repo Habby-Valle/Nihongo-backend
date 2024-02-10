@@ -272,7 +272,7 @@ class WordCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Word
-        fields = ["id", "word", "reading", "meaning", "type", "level", "category"]
+        fields = ["id", "word", "reading", "meaning", "type", "level", "category", "annotation"]
 
 
 class WordSerializer(serializers.ModelSerializer):
@@ -288,6 +288,7 @@ class WordSerializer(serializers.ModelSerializer):
             "type",
             "level",
             "category",
+            "annotation",
             "created_by",
             "created_at",
             "updated_at",

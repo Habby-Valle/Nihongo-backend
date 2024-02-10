@@ -153,6 +153,7 @@ class Word(models.Model):
     meaning = models.CharField(max_length=200)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     level = models.CharField(max_length=8, choices=LEVEL_CHOICES)
+    annotation = models.TextField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, blank=True, null=True
     )
