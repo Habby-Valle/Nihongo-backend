@@ -12,7 +12,7 @@ from .views.sentence_views import sentence_detail, sentences_list
 from .views.text_views import text_detail, text_list
 from .views.text_writing_views import text_writing_detail, text_writing_list
 from .views.user_views import user_detail, user_list, whoami
-from .views.word_views import word_detail, word_list
+from .views.word_views import word_detail, word_list, word_today_view
 
 urlpatterns = [
     path("grammar", grammar_list, name="grammar_list_create"),
@@ -32,6 +32,7 @@ urlpatterns = [
     path("category/<int:pk>", category_detail, name="category_detail"),
     path("words", word_list, name="word_list_create"),
     path("word/<int:pk>", word_detail, name="word_detail"),
+    path("word/today", word_today_view, name="word_today_view"),
     path("conjugation/<int:word_id>", conjugation_list, name="conjugation_list_create"),
     path(
         "conjugation/detail/<int:word_id>/<int:conjugation_id>",
