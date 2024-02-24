@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
+from core.models import Profile
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import (AllowAny, BasePermission,
                                         IsAuthenticated)
 from rest_framework.response import Response
 
-from core.serializers import UserCreateSerializer, UserSerializer
+from core.serializers import UserCreateSerializer, UserSerializer, ProfileSerializer
 
 
 class IsAuthenticatedOrAllowAny(BasePermission):
@@ -22,9 +23,14 @@ class IsAuthenticatedOrAllowAny(BasePermission):
 def whoami(request):
     if request.method == "GET" and request.user.is_authenticated:
         user = request.user
-        serializer = UserSerializer(user)
+        profile = Profile.objects.get(user=user)
+        serializer_user = UserSerializer(user)
+        serializer_profile = ProfileSerializer(profile)
 
-        data = {"user": serializer.data}
+        data = {
+            "user": serializer_user.data,
+            "profile": serializer_profile.data,
+        }
 
         return Response(data)
     else:
