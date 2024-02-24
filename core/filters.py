@@ -1,9 +1,9 @@
-import django_filters
+from django_filters import rest_framework as filters
 
 from core.models import Grammar, Text, Word
+from django.db.models import Q
 
-
-class GrammarFilter(django_filters.FilterSet):
+class GrammarFilter(filters.FilterSet):
     class Meta:
         model = Grammar
         fields = {
@@ -12,18 +12,24 @@ class GrammarFilter(django_filters.FilterSet):
             "level": ["exact"],
         }
 
+class WordFilter(filters.FilterSet):
+    word = filters.CharFilter(field_name='word', lookup_expr='icontains')
+    meaning = filters.CharFilter(field_name='meaning', lookup_expr='icontains')
+    reading = filters.CharFilter(field_name='reading', lookup_expr='icontains')
+    search = filters.CharFilter(method='custom_search')
 
-class WordFilter(django_filters.FilterSet):
     class Meta:
         model = Word
-        fields = {
-            "word": ["exact", "icontains"],
-            "meaning": ["exact", "icontains"],
-            "level": ["exact"],
-        }
+        fields = ['word', 'meaning', 'reading']
 
+    def custom_search(self, queryset, name, value):
+        return queryset.filter(
+            Q(word__icontains=value) | 
+            Q(meaning__icontains=value) | 
+            Q(reading__icontains=value)
+        )
 
-class TextFilter(django_filters.FilterSet):
+class TextFilter(filters.FilterSet):
     class Meta:
         model = Text
         fields = {
