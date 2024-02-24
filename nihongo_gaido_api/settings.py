@@ -165,8 +165,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
     "https://nihongo-gaido.vercel.app"# the domain for front-end app(you can add more than 1)
+    "http://localhost:3000",
 ]
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
