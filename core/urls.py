@@ -13,6 +13,7 @@ from .views.text_views import text_detail, text_list
 from .views.text_writing_views import text_writing_detail, text_writing_list
 from .views.user_views import user_detail, user_list, whoami
 from .views.word_views import word_detail, word_list, word_today_view
+from .views.home_views import latest_activity
 
 urlpatterns = [
     path("grammar", grammar_list, name="grammar_list_create"),
@@ -54,4 +55,5 @@ urlpatterns = [
         name="text_writing_detail",
     ),
     path("auth/login", login_view, name="login"),
+    path("latest_activity", latest_activity, name="latest_activity"),
 ]
