@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+
 import cloudinary_storage
 import django_on_heroku
 from decouple import config
@@ -41,26 +42,61 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    'django.contrib.staticfiles',
-    'django_cleanup.apps.CleanupConfig',
+    "django.contrib.staticfiles",
+    "django_cleanup.apps.CleanupConfig",
+    "django.contrib.sites",
     # Third-Party Apps
     "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "drf_yasg",
     "corsheaders",
     "django_filters",
-    'cloudinary_storage',
-    'cloudinary',
+    "cloudinary_storage",
+    "cloudinary",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
     # Local Apps (Your project's apps)
     "core",
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "core.utils.authentication.SafeJWTAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ]
 }
 
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_HTTPONLY": False,
+}
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     "google": {
+#         "APP": {
+#             "client_id": config("GOOGLE_CLIENT_ID"),  # replace me
+#             "secret":    config("GOOGLE_CLIENT_SECRET"),  # replace me
+#             "key": "",                               # leave empty
+#         },
+#         "SCOPE": [
+#             "profile",
+#             "email",
+#         ],
+#         "AUTH_PARAMS": {
+#             "access_type": "online",
+#         },
+#         "VERIFIED_EMAIL": True,
+#     },
+# }
 
 APPEND_SLASH = False
 MIDDLEWARE = [
@@ -72,6 +108,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "nihongo_gaido_api.urls"
@@ -165,13 +202,23 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
 CORS_ORIGIN_WHITELIST = [
-    "https://nihongo-gaido.vercel.app",# the domain for front-end app(you can add more than 1)
-    "http://localhost:3000"
+    "https://nihongo-gaido.vercel.app",  # the domain for front-end app(you can add more than 1)
+    "http://localhost:3000",
 ]
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+    "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": config("CLOUDINARY_API_KEY"),
+    "API_SECRET": config("CLOUDINARY_API_SECRET"),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": True,
+    "SIGNING_KEY": config("SECRET_KEY"),  # generate a key and replace me
+    "ALGORITHM": "HS512",
 }
 
 django_on_heroku.settings(locals())
