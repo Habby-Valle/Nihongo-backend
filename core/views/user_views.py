@@ -1,13 +1,16 @@
-from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import (AllowAny, BasePermission,
+from rest_framework.permissions import (BasePermission,
                                         IsAuthenticated)
 from rest_framework.response import Response
 
 from core.models import Profile
-from core.serializers import ProfileSerializer, UserSerializer
+from core.serializers import ProfileSerializer, UserSerializer, CustomRegisterSerializer
+from dj_rest_auth.registration.views import RegisterView
 
+
+class CustomRegisterView(RegisterView):
+    serializer_class = CustomRegisterSerializer
 
 class IsAuthenticatedOrAllowAny(BasePermission):
     def has_permission(self, request, view):

@@ -3,6 +3,8 @@ import re
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from django.contrib.auth import get_user_model
 
 from core.models import *
 
@@ -519,3 +521,28 @@ class TextWritingSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+
+class CustomRegisterSerializer(RegisterSerializer):
+    first_name = serializers.CharField(max_length=60)
+    last_name = serializers.CharField(max_length=60)
+
+    def get_cleaned_data(self):
+        super().get_cleaned_data()
+        return {
+            'username': self.validated_data.get('username', ''),
+            'password1': self.validated_data.get('password1', ''),
+            'password2': self.validated_data.get('password2', ''),
+            'email': self.validated_data.get('email', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
+        }
+
+    def custom_signup(self, request, user):
+        user.first_name = self.validated_data.get('first_name', '')
+        user.last_name = self.validated_data.get('last_name', '')
+        user.save()
+
+    def save(self, request):
+        user = super().save(request)
+        self.custom_signup(request, user)
+        return user

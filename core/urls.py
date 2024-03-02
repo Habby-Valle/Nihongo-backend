@@ -16,7 +16,7 @@ from .views.profile_views import profile_list
 from .views.sentence_views import sentence_detail, sentences_list
 from .views.text_views import text_detail, text_list
 from .views.text_writing_views import text_writing_detail, text_writing_list
-from .views.user_views import whoami
+from .views.user_views import whoami, CustomRegisterView
 from .views.word_views import word_detail, word_list, word_today_view
 
 urlpatterns = [
@@ -56,7 +56,7 @@ urlpatterns = [
         text_writing_detail,
         name="text_writing_detail",
     ),
-    path("auth/register", RegisterView.as_view(), name="rest_register"),
+    path("auth/register", CustomRegisterView.as_view(), name="rest_register"),
     path("auth/login", LoginView.as_view(), name="rest_login"),
     path("auth/logout", LogoutView.as_view(), name="rest_logout"),
     path("auth/user", UserDetailsView.as_view(), name="rest_user_details"),
