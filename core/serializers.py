@@ -185,6 +185,7 @@ class ProfileSerializerResponse(serializers.Serializer):
 
 class PracticeGrammarSerializer(serializers.ModelSerializer):
     grammar = GrammarSerializer(read_only=True)
+
     class Meta:
         model = PracticeGrammar
         fields = [
@@ -272,7 +273,16 @@ class WordCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Word
-        fields = ["id", "word", "reading", "meaning", "type", "level", "category", "annotation"]
+        fields = [
+            "id",
+            "word",
+            "reading",
+            "meaning",
+            "type",
+            "level",
+            "category",
+            "annotation",
+        ]
 
 
 class WordSerializer(serializers.ModelSerializer):

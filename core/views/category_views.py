@@ -22,7 +22,7 @@ def category_list(request):
         serializer = CategorySerializer(result_page, many=True)
 
         return paginator.get_paginated_response(serializer.data)
-    
+
     elif request.method == "POST":
         serializer = CategoryCreateSerializer(data=request.data)
 
