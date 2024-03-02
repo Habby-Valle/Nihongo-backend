@@ -72,21 +72,28 @@ def word_detail(request, pk):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def word_today_view(request):
+    word_data = None
     if request.method == "GET":
         if "word_of_the_day_id" in request.session:
             word_id = request.session["word_of_the_day_id"]
             word_today = Word.objects.get(pk=word_id)
         else:
             words = Word.objects.filter(created_by=request.user)
-            word_today = random.choice(words)
-            request.session["word_of_the_day_id"] = word_today.id
+            if words.count() > 0:
+                word_today = random.choice(words)
+                request.session["word_of_the_day_id"] = word_today.id
 
-            end_of_day = timezone.localtime()
-            end_of_day = end_of_day.replace(hour=23, minute=59, second=59)
-            request.session.set_expiry(end_of_day)
+                end_of_day = timezone.localtime()
+                end_of_day = end_of_day.replace(hour=23, minute=59, second=59)
+                request.session.set_expiry(end_of_day)
+            else:
+                word_today = None
 
-        serializer = WordSerializer(word_today)
-        data = {"word_today": serializer.data}
+        if word_today:
+            serializer = WordSerializer(word_today)
+            word_data = serializer.data
+
+        data = {"word_today": word_data}
 
         return Response(data, status=status.HTTP_200_OK)
     else:
