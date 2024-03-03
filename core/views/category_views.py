@@ -15,7 +15,7 @@ def category_list(request):
     if request.method == "GET":
         categories = Category.objects.filter(
             Q(is_created_by_user=False) | Q(created_by=request.user)
-        )
+        ).order_by("-created_at")
 
         paginator = CustomPagination()
         result_page = paginator.paginate_queryset(categories, request)

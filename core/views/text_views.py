@@ -13,7 +13,7 @@ from core.utils.paginationn import CustomPagination
 @permission_classes([IsAuthenticated])
 def text_list(request):
     if request.method == "GET":
-        texts = Text.objects.filter(created_by=request.user)
+        texts = Text.objects.filter(created_by=request.user).order_by("-created_at")
         filter = TextFilter(request.GET, queryset=texts)
         paginator = CustomPagination()
         result_page = paginator.paginate_queryset(filter.qs, request)

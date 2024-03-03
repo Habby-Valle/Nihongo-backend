@@ -4,8 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from core.models import Profile
-from core.serializers import (ProfileSerializer, ProfileSerializerResponse,
-                              ProfileUpdateSerializer)
+from core.serializers import (ProfileSerializer, ProfileUpdateSerializer)
 
 
 @api_view(["GET", "PATCH"])

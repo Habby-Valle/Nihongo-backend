@@ -14,7 +14,7 @@ def sentences_list(request, grammar_id):
     try:
         sentences = Sentence.objects.filter(
             grammar_id=grammar_id, created_by=request.user
-        )
+        ).order_by("-created_at")
     except Sentence.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
