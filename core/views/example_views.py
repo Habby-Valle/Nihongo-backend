@@ -17,7 +17,7 @@ def example_list(request, word_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == "GET":
-        examples = Example.objects.filter(created_by=request.user, word=word)
+        examples = Example.objects.filter(created_by=request.user, word=word).order_by("-created_at")
 
         paginator = CustomPagination()
         result_page = paginator.paginate_queryset(examples, request)
