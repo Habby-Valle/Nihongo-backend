@@ -204,7 +204,7 @@ class Example(models.Model):
     example = models.CharField(max_length=200)
     meaning = models.CharField(max_length=200)
     annotation = models.TextField(max_length=500, null=True, blank=True)
-    word = models.ForeignKey(Word, on_delete=models.CASCADE, blank=True, null=True)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, blank=True, null=True, related_name="Word_Example")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True
     )

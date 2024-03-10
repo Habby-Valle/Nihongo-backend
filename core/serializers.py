@@ -289,7 +289,7 @@ class WordCreateSerializer(serializers.ModelSerializer):
 
 class WordSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-
+    examples_count = serializers.SerializerMethodField()
     class Meta:
         model = Word
         fields = [
@@ -304,7 +304,11 @@ class WordSerializer(serializers.ModelSerializer):
             "created_by",
             "created_at",
             "updated_at",
+            "examples_count",
         ]
+
+    def get_examples_count(self, obj):
+        return obj.Word_Example.count()
 
 
 class ConjugationCreateSerializer(serializers.ModelSerializer):
