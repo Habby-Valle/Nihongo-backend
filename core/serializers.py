@@ -550,3 +550,16 @@ class CustomRegisterSerializer(RegisterSerializer):
         user = super().save(request)
         self.custom_signup(request, user)
         return user
+
+class StatisticGrammarByCategorySerializer(serializers.Serializer):
+    level_name = serializers.CharField()
+    grammars_count = serializers.IntegerField()
+
+class StatisticWordByLevelSerializer(serializers.Serializer):
+    level_name = serializers.CharField()
+    words_count = serializers.IntegerField()
+
+class StatisticWordByCategorySerializer(serializers.Serializer):
+    category_name = serializers.CharField()
+    words_count = serializers.IntegerField()
+    
