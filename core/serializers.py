@@ -289,7 +289,7 @@ class WordCreateSerializer(serializers.ModelSerializer):
 
 class WordSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
-
+    examples_count = serializers.SerializerMethodField()
     class Meta:
         model = Word
         fields = [
@@ -304,7 +304,11 @@ class WordSerializer(serializers.ModelSerializer):
             "created_by",
             "created_at",
             "updated_at",
+            "examples_count",
         ]
+
+    def get_examples_count(self, obj):
+        return obj.Word_Example.count()
 
 
 class ConjugationCreateSerializer(serializers.ModelSerializer):
@@ -546,3 +550,16 @@ class CustomRegisterSerializer(RegisterSerializer):
         user = super().save(request)
         self.custom_signup(request, user)
         return user
+
+class StatisticGrammarByCategorySerializer(serializers.Serializer):
+    level_name = serializers.CharField()
+    grammars_count = serializers.IntegerField()
+
+class StatisticWordByLevelSerializer(serializers.Serializer):
+    level_name = serializers.CharField()
+    words_count = serializers.IntegerField()
+
+class StatisticWordByCategorySerializer(serializers.Serializer):
+    category_name = serializers.CharField()
+    words_count = serializers.IntegerField()
+    

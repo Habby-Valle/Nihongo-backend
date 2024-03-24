@@ -1,6 +1,4 @@
-from allauth.socialaccount.views import signup
 from dj_rest_auth.jwt_auth import get_refresh_view
-from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
 from django.urls import path
 from rest_framework_simplejwt.views import TokenVerifyView
@@ -18,10 +16,12 @@ from .views.text_views import text_detail, text_list
 from .views.text_writing_views import text_writing_detail, text_writing_list
 from .views.user_views import whoami, CustomRegisterView
 from .views.word_views import word_detail, word_list, word_today_view
+from .views.statistic_views import statistic_view
 
 urlpatterns = [
     path("grammar", grammar_list, name="grammar_list_create"),
     path("grammar/<int:pk>", grammar_detail, name="grammar_detail"),
+    path("statistics", statistic_view, name="grammar_by_level_view"),
     path("whoami", whoami, name="whoami"),
     path("profile/<int:user_id>", profile_list, name="profile_list"),
     path("choice_grammar", choice_grammar, name="choice_grammar"),
