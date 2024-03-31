@@ -17,8 +17,10 @@ from .views.text_writing_views import text_writing_detail, text_writing_list
 from .views.user_views import whoami, CustomRegisterView
 from .views.word_views import word_detail, word_list, word_today_view
 from .views.statistic_views import statistic_view
+from .views.dictionary_view import dictionary_view
 
 urlpatterns = [
+    path("dictionary/<str:term_search>", dictionary_view, name="dictionary_view"),
     path("grammar", grammar_list, name="grammar_list_create"),
     path("grammar/<int:pk>", grammar_detail, name="grammar_detail"),
     path("statistics", statistic_view, name="grammar_by_level_view"),
