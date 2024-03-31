@@ -563,3 +563,13 @@ class StatisticWordByCategorySerializer(serializers.Serializer):
     category_name = serializers.CharField()
     words_count = serializers.IntegerField()
     
+class DictionarySerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    id_term = serializers.CharField()
+    term = serializers.CharField()
+    reading = serializers.CharField()
+    translates = serializers.ListField(child=serializers.CharField())
+    classification = serializers.CharField()
+    frequency = serializers.IntegerField()
+    extra = serializers.ListField(child=serializers.IntegerField())
+    extra_II = serializers.ListField(child=serializers.IntegerField())
