@@ -13,7 +13,7 @@ from core.utils.paginationn import CustomPagination
 @permission_classes([IsAuthenticated])
 def grammar_list(request):
     if request.method == "GET":
-        grammars = Grammar.objects.filter(created_by=request.user).order_by("-created_at")
+        grammars = Grammar.objects.filter(created_by=request.user).order_by("grammar")
         filter = GrammarFilter(request.GET, queryset=grammars)
         paginator = CustomPagination()
         result_page = paginator.paginate_queryset(filter.qs, request)
