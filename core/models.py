@@ -149,10 +149,10 @@ class Word(models.Model):
         ("Unknow", "Unknow"),
     )
     word = models.CharField(max_length=20)
-    reading = models.CharField(max_length=20)
+    reading = models.CharField(max_length=20, null=True, blank=True)
     meaning = models.CharField(max_length=200)
-    type = models.CharField(max_length=20, choices=TYPE_CHOICES)
-    level = models.CharField(max_length=8, choices=LEVEL_CHOICES)
+    type = models.CharField(max_length=20, choices=TYPE_CHOICES, null=True, blank=True)
+    level = models.CharField(max_length=8, choices=LEVEL_CHOICES, null=True, blank=True)
     annotation = models.TextField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, blank=True, null=True
